@@ -1,0 +1,149 @@
+version: '3.8'
+
+services:
+  # Metadata service cluster (3 nodes for Raft consensus)
+  metadata-1:
+    build:
+      context: .
+      dockerfile: metadata-service/Dockerfile
+    environment:
+      - RATIS_NODE_ID=metadata-1
+      - RATIS_NODES=metadata-1:localhost:9001,metadata-2:metadata-2:9001,metadata-3:metadata-3:9001
+      - RATIS_PORT=9001
+      - SERVER_PORT=8081
+    ports:
+      - "8081:8081"
+      - "9001:9001"
+    volumes:
+      - metadata-1-data:/app/data
+    networks:
+      - filestorage
+
+  metadata-2:
+    build:
+      context: .
+      dockerfile: metadata-service/Dockerfile
+    environment:
+      - RATIS_NODE_ID=metadata-2
+      - RATIS_NODES=metadata-1:metadata-1:9001,metadata-2:localhost:9001,metadata-3:metadata-3:9001
+      - RATIS_PORT=9001
+      - SERVER_PORT=8082
+    ports:
+      - "8082:8082"
+      - "9002:9001"
+    volumes:
+      - metadata-2-data:/app/data
+    networks:
+      - filestorage
+    depends_on:
+      - metadata-1
+
+  metadata-3:
+    build:
+      context: .
+      dockerfile: metadata-service/Dockerfile
+    environment:
+      - RATIS_NODE_ID=metadata-3
+      - RATIS_NODES=metadata-1:metadata-1:9001,metadata-2:metadata-2:9001,metadata-3:localhost:9001
+      - RATIS_PORT=9001
+      - SERVER_PORT=8083
+    ports:
+      - "8083:8083"
+      - "9003:9001"
+    volumes:
+      - metadata-3-data:/app/data
+    networks:
+      - filestorage
+    depends_on:
+      - metadata-1
+      - metadata-2
+
+  # Storage nodes cluster
+  storage-1:
+    build:
+      context: .
+      dockerfile: storage-node/Dockerfile
+    environment:
+      - STORAGE_NODE_ID=storage-1
+      - STORAGE_PORT=50051
+      - STORAGE_DATA_DIR=/app/data
+      - JGROUPS_BIND_ADDR=storage-1
+      - JGROUPS_CLUSTER_NAME=storage-cluster
+    ports:
+      - "50051:50051"
+    volumes:
+      - storage-1-data:/app/data
+    networks:
+      - filestorage
+
+  storage-2:
+    build:
+      context: .
+      dockerfile: storage-node/Dockerfile
+    environment:
+      - STORAGE_NODE_ID=storage-2
+      - STORAGE_PORT=50052
+      - STORAGE_DATA_DIR=/app/data
+      - JGROUPS_BIND_ADDR=storage-2
+      - JGROUPS_CLUSTER_NAME=storage-cluster
+    ports:
+      - "50052:50052"
+    volumes:
+      - storage-2-data:/app/data
+    networks:
+      - filestorage
+    depends_on:
+      - storage-1
+
+  storage-3:
+    build:
+      context: .
+      dockerfile: storage-node/Dockerfile
+    environment:
+      - STORAGE_NODE_ID=storage-3
+      - STORAGE_PORT=50053
+      - STORAGE_DATA_DIR=/app/data
+      - JGROUPS_BIND_ADDR=storage-3
+      - JGROUPS_CLUSTER_NAME=storage-cluster
+    ports:
+      - "50053:50053"
+    volumes:
+      - storage-3-data:/app/data
+    networks:
+      - filestorage
+    depends_on:
+      - storage-1
+      - storage-2
+
+  # API Gateway
+  api-gateway:
+    build:
+      context: .
+      dockerfile: api-gateway/Dockerfile
+    environment:
+      - SERVER_PORT=8080
+      - METADATA_ENDPOINTS=metadata-1:8081,metadata-2:8082,metadata-3:8083
+      - STORAGE_ENDPOINTS=storage-1:50051,storage-2:50052,storage-3:50053
+    ports:
+      - "8080:8080"
+    networks:
+      - filestorage
+    depends_on:
+      - metadata-1
+      - metadata-2
+      - metadata-3
+      - storage-1
+      - storage-2
+      - storage-3
+
+volumes:
+  metadata-1-data:
+  metadata-2-data:
+  metadata-3-data:
+  storage-1-data:
+  storage-2-data:
+  storage-3-data:
+
+networks:
+  filestorage:
+    driver: bridge

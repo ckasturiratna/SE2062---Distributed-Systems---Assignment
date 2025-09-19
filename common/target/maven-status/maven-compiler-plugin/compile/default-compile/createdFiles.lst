@@ -1,0 +1,7 @@
+com/distributed/filestorage/common/time/LogicalClock.class
+com/distributed/filestorage/common/dto/NodeInfo.class
+com/distributed/filestorage/common/dto/NodeInfo$NodeStatus.class
+com/distributed/filestorage/common/utils/CommonUtils.class
+com/distributed/filestorage/common/time/VectorClock.class
+com/distributed/filestorage/common/dto/FileLocation.class
+com/distributed/filestorage/common/dto/FileMetadata.class

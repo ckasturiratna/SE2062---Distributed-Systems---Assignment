@@ -1,0 +1,3 @@
+com/distributed/filestorage/metadata/service/MetadataService.class
+com/distributed/filestorage/metadata/MetadataServiceApplication.class
+com/distributed/filestorage/metadata/raft/MetadataStateMachine.class

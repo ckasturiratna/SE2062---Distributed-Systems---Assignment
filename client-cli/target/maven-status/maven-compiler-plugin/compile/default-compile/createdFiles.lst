@@ -1,0 +1,11 @@
+com/distributed/filestorage/client/cli/FileStorageCLI$InfoCommand.class
+com/distributed/filestorage/client/cli/FileStorageCLI$UploadCommand.class
+META-INF/native-image/picocli-generated/com.distributed.filestorage/client-cli/resource-config.json
+META-INF/native-image/picocli-generated/com.distributed.filestorage/client-cli/proxy-config.json
+META-INF/native-image/picocli-generated/com.distributed.filestorage/client-cli/reflect-config.json
+com/distributed/filestorage/client/service/ApiClient$1.class
+com/distributed/filestorage/client/cli/FileStorageCLI$ListCommand.class
+com/distributed/filestorage/client/cli/FileStorageCLI$DeleteCommand.class
+com/distributed/filestorage/client/service/ApiClient.class
+com/distributed/filestorage/client/cli/FileStorageCLI.class
+com/distributed/filestorage/client/cli/FileStorageCLI$DownloadCommand.class

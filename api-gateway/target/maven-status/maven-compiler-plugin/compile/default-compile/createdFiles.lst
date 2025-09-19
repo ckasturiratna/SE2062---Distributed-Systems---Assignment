@@ -1,0 +1,6 @@
+com/distributed/filestorage/gateway/ApiGatewayApplication.class
+com/distributed/filestorage/gateway/controller/FileController$FileUploadResponse.class
+com/distributed/filestorage/gateway/controller/FileController$FileOperationResponse.class
+com/distributed/filestorage/gateway/service/FileService$FileData.class
+com/distributed/filestorage/gateway/controller/FileController.class
+com/distributed/filestorage/gateway/service/FileService.class
