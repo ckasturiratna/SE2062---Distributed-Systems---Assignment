@@ -1,0 +1,37 @@
+<project>
+  <parent>
+    <groupId>com.ds</groupId>
+    <artifactId>ds-parent</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>metadata-service</artifactId>
+  <dependencies>
+    <!-- Raft Consensus -->
+    <dependency>
+      <groupId>org.apache.ratis</groupId>
+      <artifactId>ratis-server</artifactId>
+      <version>2.5.1</version>
+    </dependency>
+    <!-- RocksDB for state machine storage -->
+    <dependency>
+      <groupId>org.rocksdb</groupId>
+      <artifactId>rocksdbjni</artifactId>
+      <version>8.9.1</version>
+    </dependency>
+    <!-- gRPC client/server APIs -->
+    <dependency>
+      <groupId>io.grpc</groupId>
+      <artifactId>grpc-netty</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.grpc</groupId>
+      <artifactId>grpc-protobuf</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.grpc</groupId>
+      <artifactId>grpc-stub</artifactId>
+    </dependency>
+  </dependencies>
+</project>
