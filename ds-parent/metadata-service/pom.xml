@@ -1,6 +1,6 @@
 <project>
   <parent>
-    <groupId>com.ds</groupId>
+    <groupId>com.example.ds</groupId>
     <artifactId>ds-parent</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
