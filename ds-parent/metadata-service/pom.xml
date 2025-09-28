@@ -19,6 +19,8 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <ratis.version>2.5.1</ratis.version> <!-- Apache Ratis Version -->
+        <rocksdb.version>8.5.3</rocksdb.version> <!-- RocksDB Version -->
     </properties>
 
     <dependencies>
@@ -37,11 +39,28 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Consensus Layer (Raft) - Placeholder -->
+        <!-- Consensus Layer (Apache Ratis) -->
         <dependency>
-            <groupId>io.atomix</groupId>
-            <artifactId>atomix</artifactId>
-            <version>3.1.5</version> <!-- Using an explicit version for this non-BOM dependency -->
+            <groupId>org.apache.ratis</groupId>
+            <artifactId>ratis-server</artifactId>
+            <version>${ratis.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.ratis</groupId>
+            <artifactId>ratis-grpc</artifactId>
+            <version>${ratis.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.ratis</groupId>
+            <artifactId>ratis-proto</artifactId>
+            <version>${ratis.version}</version>
+        </dependency>
+
+        <!-- Persistence Layer (RocksDB) -->
+        <dependency>
+            <groupId>org.rocksdb</groupId>
+            <artifactId>rocksdbjni</artifactId>
+            <version>${rocksdb.version}</version>
         </dependency>
 
         <!-- Utilities -->
