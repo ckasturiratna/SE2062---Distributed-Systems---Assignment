@@ -15,6 +15,10 @@
     <description>Shared DTOs, protobuf stubs, and utilities</description>
 
     <dependencies>
-        <!-- Add protobuf/runtime dependencies here when needed -->
+        <!-- Logging API for shared modules -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
     </dependencies>
 </project>
