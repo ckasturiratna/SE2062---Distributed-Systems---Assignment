@@ -1,0 +1,82 @@
+syntax = "proto3";
+
+package com.ds.storage;
+
+option java_multiple_files = true;
+option java_package = "com.ds.storage.grpc";
+option java_outer_classname = "StorageNodeServiceProto";
+
+message ChunkId {
+  string fileId = 1;
+  int32 chunkIndex = 2;
+}
+
+message VersionVectorEntry {
+  string nodeId = 1;
+  int64 counter = 2;
+}
+
+message VersionVector {
+  repeated VersionVectorEntry entries = 1;
+}
+
+message OrderedTimestamp {
+  int64 logicalTime = 1;
+  int64 wallTimeEpochMilli = 2;
+  string nodeId = 3;
+}
+
+message ReplicaMetadata {
+  ChunkId chunkId = 1;
+  VersionVector versionVector = 2;
+  OrderedTimestamp timestamp = 3;
+  string nodeId = 4;
+}
+
+message PutChunkRequest {
+  ChunkId chunkId = 1;
+  bytes data = 2;
+  ReplicaMetadata metadata = 3;
+}
+
+message PutChunkResponse {
+  ReplicaMetadata metadata = 1; // returns the server-updated metadata (vv + timestamp)
+}
+
+message GetChunkRequest {
+  ChunkId chunkId = 1;
+}
+
+message GetChunkResponse {
+  bytes data = 1;
+  ReplicaMetadata metadata = 2;
+}
+
+message ReplicateChunkRequest {
+  ChunkId chunkId = 1;
+  string targetNodeId = 2;
+}
+
+message ReplicateChunkResponse {
+  bool scheduled = 1;
+}
+
+message InventoryDigestRequest {}
+
+message ReplicaSummary {
+  ChunkId chunkId = 1;
+  ReplicaMetadata metadata = 2;
+}
+
+message InventoryDigestResponse {
+  repeated ReplicaSummary replicas = 1;
+}
+
+service StorageNodeService {
+  rpc PutChunk (PutChunkRequest) returns (PutChunkResponse);
+  rpc GetChunk (GetChunkRequest) returns (GetChunkResponse);
+  rpc ReplicateChunk (ReplicateChunkRequest) returns (ReplicateChunkResponse);
+  rpc InventoryDigest (InventoryDigestRequest) returns (InventoryDigestResponse);
+}
+
+
